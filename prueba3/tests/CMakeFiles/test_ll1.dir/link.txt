@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/test_ll1.dir/test_ll1.cpp.o CMakeFiles/test_ll1.dir/home/jose/Documents/Compiladores1_2019/Compi2019/prueba3/grammar.cpp.o CMakeFiles/test_ll1.dir/home/jose/Documents/Compiladores1_2019/Compi2019/prueba3/LL1.cpp.o  -o test_ll1 

@@ -1,3 +1,0 @@
-/home/jose/Documents/Compiladores1_2019/Compi2019/prueba3/tests/CMakeFiles/rebuild_cache.dir
-/home/jose/Documents/Compiladores1_2019/Compi2019/prueba3/tests/CMakeFiles/test_ll1.dir
-/home/jose/Documents/Compiladores1_2019/Compi2019/prueba3/tests/CMakeFiles/edit_cache.dir

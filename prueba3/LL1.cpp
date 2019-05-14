@@ -30,23 +30,44 @@ LL1::LL1(Grammar &gr,
 }
 
 GSymbolPtrSet LL1::getFirsts(const GSymbolPtrVector& symbv) {
-    GSymbolPtr firt = gr.getStartSymbol();
-    GSymbolPtrSet getfirt = getFirsts(firt);
-
-    return getfirt;
+    GSymbolPtrSet  fset;
+    auto it =symbv.begin();
+    while(it != symbv.end()){
+        GSymbolPtr s = *it;
+        if(s->isTerminal()){
+            fset.insert(s);
+            break;
+        }
+        const GSymbolPtrSet &other_fset=firsts[s->getName()];
+        bool epsilon_in_firsts=other_fset.count(GSymbol::epsilon())>0;
+        fset.insert(other_fset.begin(),other_fset.end());
+        if(!epsilon_in_firsts){
+            break;
+        }
+        else{
+            fset.erase(GSymbol::epsilon());
+        }
+        it++;
+    }
+    if(it==symbv.end()){
+        fset.insert(GSymbol::epsilon());
+    }
+    return fset;
 }
 
 void LL1::computeTable()
 {
-    GSymbolPtr start_symb;
-    GSymbolPtrVector non_terminals; // Non terminal symbols
-    GSymbolPtrVector terminals;     // Terminal symbols
-    GRulePtrVector rulesv;
-
-    start_symb=gr.getStartSymbol();
-    non_terminals=gr.getNonTerminals();
-    terminals=gr.getTerminals();
-    rulesv = gr.getAllRules();
+    const GRulePtrVector &rules=gr.getAllRules();
+    for(auto rule:rules){
+        const GSymbolPtrSet &first_of_rule=getFirsts(rule->getRHS());
+        std::string lhs_name=rule->getLHS()->getName();
+        
+        for(auto s:first_of_rule){
+            if(!s->isEpsilon()){
+                tbl[lhs_name][s->getName()]=rule;
+            }
+        }
+    }
 
 
 }
